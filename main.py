@@ -10,6 +10,7 @@ from datetime import datetime
 import controller.products.products as products
 import controller.users.users as users
 import controller.customers.customers as customers
+import controller.payments.payment as payments
 
 
 
@@ -35,6 +36,7 @@ def read_root():
 app.include_router(products.router)
 app.include_router(users.router)
 app.include_router(customers.router)
+app.include_router(payments.router)
 
 
 

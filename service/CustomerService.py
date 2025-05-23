@@ -17,11 +17,6 @@ def fetchCustomers(session: Session) -> List[CustomersListView]:
             first_name = customer.first_name,
             last_name = customer.last_name,
             email = customer.email,
-            
-
-         
-
-
         )
         for customer in curtomerData
     ]
