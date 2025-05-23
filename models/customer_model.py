@@ -1,5 +1,5 @@
 from datetime import date
-from sqlmodel import SQLModel, Field
+from sqlmodel import SQLModel, Field, Relationship
 from typing import Optional
 
 class Customer(SQLModel, table=True,):
@@ -14,6 +14,8 @@ class Customer(SQLModel, table=True,):
     last_update: date
     active: int
 
+    payments: list["payment"] = Relationship(back_populates="customer")
+
 
 
    
@@ -24,6 +26,9 @@ class CustomersListView(SQLModel):
     first_name: str
     last_name: str
     email: str
+
+    class Config:
+        orm_mode = True
    
 
 class CustomersDetailView(SQLModel):
