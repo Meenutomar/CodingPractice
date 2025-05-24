@@ -42,7 +42,9 @@ class CustomersDetailView(SQLModel):
     creat_date: date
     last_update: date
     active: int
-
+    
+    class Config:
+        orm_mode = True
 
 
 
