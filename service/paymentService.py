@@ -6,28 +6,21 @@ import datetime
 
 class PaymentService:
     def __init__(self):
-        self.payment_cache_data = []
+        self.payment_cache_data = {}
         
+
 
     def fetchPaymentById(self, session: Session, id):
 
         startTime = datetime.datetime.now()
         print("-------------------------------Enter DB call", startTime )
+        self.checkAndUpdateCache(session)
         
-        if(len(self.payment_cache_data) == 0):
-            print("Load Cache.....")
-            self.payment_cache_data = get_all_payments(session)
-        
-        print("######################### 1 ############::", len(self.payment_cache_data))
 
         
-        payment = None
-        for i in range(len(self.payment_cache_data)):
-            if(self.payment_cache_data[i].payment_id == id):
-                print("######################### 2 ############")
-                payment = self.payment_cache_data[i] 
+        payment = self.payment_cache_data.get(id)
+        print("Fetched from Cache....", payment)
             
-        print("######################### 3 ############")    
         if (payment == None):
             payment = getPaymentById(session,id)
             self.payment_cache_data.append(payment)
@@ -57,15 +50,7 @@ class PaymentService:
     def fetchPayment(self, session: Session):
         startTime = datetime.datetime.now()
         print("-------------------------------Enter DB call", startTime )
-        if(len(self.payment_cache_data) == 0):
-            print("Caching Data.....")
-            payments = get_all_payments(session)
-            self.payment_cache_data = payments
-            print("Data cached.....", len(self.payment_cache_data))
-        else:
-            print("Data already cached.....", len(self.payment_cache_data))
-            payments =  self.payment_cache_data
-        
+        self.checkAndUpdateCache(session)
     
         payment_list: List[PaymentListView] = [PaymentListView(
             payment_id = payment.payment_id,
@@ -77,8 +62,30 @@ class PaymentService:
             rental_id= payment.rental_id,
             staff_id= payment.staff_id,
         )
-        for payment in payments]
+        for key, payment in  self.payment_cache_data.items()]
         print("-------------------------------Exit DB call", (datetime.datetime.now()-startTime).total_seconds())
 
         return payment_list
 
+
+    def cachePayments(self, payments):
+        for payment in payments:
+            #print("Payment::", i, type(i))
+            key = payment.payment_id
+            value =  payment
+            print("Key::", key, " Value::", value)
+            self.payment_cache_data.setdefault(key,value)
+
+        print("Data cached.....", len(self.payment_cache_data))
+
+    def checkAndUpdateCache(self, session):
+        if(len(self.payment_cache_data) == 0):
+            print("Caching Data.....")
+            payments = get_all_payments(session)
+            #self.payment_cache_data = {payments[i]: payments[i+1] for i in range(0,len(payments))}
+            print("Cache Data:", self.payment_cache_data)
+            self.cachePayments(payments)
+        else:
+            print("Data already cached.....", len(self.payment_cache_data))
+       
+        
