@@ -29,15 +29,15 @@ class Category(SQLModel,table = True):
 class Film(SQLModel, table=True):
     film_id: Optional[int] = Field(default=None, primary_key=True)
     title: str 
-    description: str
-    release_year: int
+    description: Optional[str]
+    release_year: Optional[int]
     language_id: int
-    original_language_id: int
+    original_language_id: Optional[int]
     rental_duration: int
     rental_rate: float
-    length: int
+    length: Optional[int]
     replacement_cost: float
-    rating: str
+    rating: Optional[int]
     last_update: datetime.datetime
     # special_features: str
     # fulltext: str
@@ -75,14 +75,10 @@ class CategoryView(BaseModel):
     name: str
 
 
-
-
-
-
 class FilmsDetailView(BaseModel):
     film_id: int
     title: str
-    description: str
+    description: Optional[str]
     release_year: Optional[int]
     language_id: Optional[int]
     original_language_id: Optional[int]
@@ -96,3 +92,17 @@ class FilmsDetailView(BaseModel):
     # special_features: str
     # fulltext: str
 
+class FilmsCreateView(BaseModel):
+    film_id: Optional[int]= None
+    title: str
+    description: Optional[str] = None
+    release_year: Optional[int] = None
+    language_id: Optional[int] = None
+    original_language_id: Optional[int] = None
+    rental_duration: Optional[int] = None
+    rental_rate: Optional[float] = None
+    length: Optional[int] = None
+    replacement_cost: Optional[float] = None
+    rating: str
+    #last_update: datetime.datetime
+    #categories: List[str]

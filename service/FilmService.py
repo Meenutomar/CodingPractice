@@ -52,3 +52,8 @@ def fetchFilmById(session: Session, id: int) -> FilmsDetailView:
     )
 
     return film_read
+
+
+def createFilm(session, film):
+    # Create a new film
+    return ""

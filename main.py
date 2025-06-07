@@ -12,8 +12,9 @@ import controller.products.products as products
 import controller.users.users as users
 import controller.customers.customers as customers
 import controller.payments.payment as payments
-import controller.films.films as films
+import controller.films.FilmController as films
 from controller.films import actor as actors
+from controller.staffs import staffs as staffs
 
 
 app = FastAPI()
@@ -40,6 +41,7 @@ app.include_router(customers.router)
 app.include_router(payments.router)
 app.include_router(films.router)
 app.include_router(actors.router)
+app.include_router(staffs.router)
 
 
 
