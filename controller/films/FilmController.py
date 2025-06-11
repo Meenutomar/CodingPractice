@@ -3,7 +3,7 @@ from backend.databasepaglu import get_session_pagli
 from controller.films.FilmValidator import FilmValidator
 from errors.TechnicalException import TechnicalException
 from errors.BusinessException import BusinessException
-from models.film_model import FilmListView, FilmsDetailView,FilmsCreateView
+from models.film_model import FilmListView, FilmsDetailView,FilmsCreateModel
 from service.FilmService import  fetchfilms,fetchFilmById, createFilm
 
 from sqlmodel import Session
@@ -12,10 +12,11 @@ from typing import List
 router = APIRouter()
 
 @router.post("/films", tags=["films"])
-def create_film(film: FilmsCreateView, session: Session = Depends(get_session_pagli)):
+def create_film(film: FilmsCreateModel, session: Session = Depends(get_session_pagli)):
     print("Inside Create Films::", film)
     try:
         FilmValidator.validate(film)
+        
         return createFilm(session=session,film=film)
         
     except BusinessException as be:

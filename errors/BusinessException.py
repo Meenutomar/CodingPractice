@@ -11,3 +11,7 @@ class YearException(BusinessException):
       self.code = 405
       self.message = message
 
+class NameException(BusinessException):
+   def __init__(self, message="Invalid name"):
+      self.code = 406
+      self.message = message

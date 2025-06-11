@@ -1,3 +1,4 @@
+from typing import List
 from sqlmodel import SQLModel, Session, select, Field
 from sqlmodel import Session, select
 from sqlalchemy.orm import selectinload
@@ -25,3 +26,7 @@ def getFilmById(session: Session, id):
 def create_film(session: Session, film):
     # Create a film
     return ""
+
+# def fetch_category_by_name(session: Session, categories: List[str]):
+#     statement = select(Category).where(Category.category_name.in_(categories))
+#     return session.exec(statement).all()

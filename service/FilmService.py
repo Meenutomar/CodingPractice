@@ -1,6 +1,6 @@
 from backend.films.FilmsBackend import get_all_films, getFilmById
 from sqlmodel import Session
-from models.film_model import FilmListView, FilmsDetailView,CategoryView
+from models.film_model import Film, FilmListView, FilmsCreateModel, FilmsDetailView,CategoryView
 from typing import List
 
 
@@ -54,6 +54,20 @@ def fetchFilmById(session: Session, id: int) -> FilmsDetailView:
     return film_read
 
 
-def createFilm(session, film):
+def createFilm(session, film : FilmsCreateModel):
     # Create a new film
+    new_Film = Film(
+        title = film.title,
+        description = film.description,
+        release_year = film.release_year,
+        rental_duration = film.rental_duration,
+        language_id = film.language_id,
+        original_language_id = film.original_language_id,
+        length = film.length,
+        rental_rate = film.rental_rate,
+        replacement_cost = film.rental_rate,
+        rating = film.rating
+    )
+
+    film_category = film_category
     return ""

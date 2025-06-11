@@ -92,7 +92,12 @@ class FilmsDetailView(BaseModel):
     # special_features: str
     # fulltext: str
 
-class FilmsCreateView(BaseModel):
+
+class ActorModel(BaseModel) :
+    id: int
+    name: str
+
+class FilmsCreateModel(BaseModel):
     film_id: Optional[int]= None
     title: str
     description: Optional[str] = None
@@ -104,5 +109,6 @@ class FilmsCreateView(BaseModel):
     length: Optional[int] = None
     replacement_cost: Optional[float] = None
     rating: str
-    #last_update: datetime.datetime
-    #categories: List[str]
+    actors: List[ActorModel]
+    categories: List[str]
+

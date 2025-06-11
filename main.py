@@ -15,9 +15,13 @@ import controller.payments.payment as payments
 import controller.films.FilmController as films
 from controller.films import actor as actors
 from controller.staffs import staffs as staffs
+from controller.category import CategoryController as categories
+from logging_config import configure_logging
 
 
 app = FastAPI()
+
+configure_logging()
 
 origins = [
     "http://localhost:5173",
@@ -30,6 +34,8 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"]
 )
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -42,6 +48,8 @@ app.include_router(payments.router)
 app.include_router(films.router)
 app.include_router(actors.router)
 app.include_router(staffs.router)
+app.include_router(categories.router)
+
 
 
 
